@@ -1,0 +1,6 @@
+project (1:0:0) -> "jsonlikeql" {
+#-- Properties
+  %any
+#-- Targets
+  %makefile-unix
+}
