@@ -19,6 +19,11 @@ class CompilatorController extends Controller
         
         $fs = new FileSystem();
         $fs->galgasVersion(function($lines, $return_var) use (&$data) {
+            if (empty($lines)) {
+                $data['version'] = 'not available';
+                $data['code'] = $return_var;
+                return;
+            }
             $parts = explode(',', $lines[0]);
             // $parts[0] = "galgas : 3.3.3"
             // $parts[1] = " build with GALGAS GALGASBETAVERSION"

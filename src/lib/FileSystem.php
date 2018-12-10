@@ -10,7 +10,7 @@ namespace GWA;
  */
 class FileSystem
 {
-    const BIN_GALGAS = __DIR__.'../../bin/galgas';
+    const BIN_GALGAS = __DIR__.'/../../bin/galgas';
     const GALGAS_TEST_COMMAND = "cd /home2/Code/galgas-custom/assistant/../ && /home2/Code/galgas-custom/assistant/../makefile-unix/galgas assistant/fixtures/web.assistant --ast-location=./assistant/fixtures/web.assistant --emit-issue-json-file=/home2/Code/galgas-custom/assistant/log.json --max-errors=5 --ast-successlog=kl";
     //-ast-location=./${TESTFILE} --emit-issue-json-file=${LOGFILE} --max-errors=5 --ast-successlog=kl
 
@@ -41,12 +41,12 @@ class FileSystem
     }
 
     public function galgas($args, callable $callback = null){
-        exec ( FileSystem::BIN_GALGAS . " ".$args , $lines, $return_var );
+        exec ( realpath(FileSystem::BIN_GALGAS) . " ".$args , $lines, $return_var );
         $this->call($callback, [$lines, $return_var]);
     }
 
     public function galgasVersion(callable $callback = null){
-        exec ( FileSystem::BIN_GALGAS . " --version | grep galgas" , $lines, $return_var );
+        exec ( realpath(FileSystem::BIN_GALGAS) . " --version | grep galgas" , $lines, $return_var );
         $this->call($callback, [$lines, $return_var]);
     }
 }
