@@ -19,7 +19,8 @@
         "monolog/monolog": "^1.17"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=4.8 < 6.0"
+        "phpunit/phpunit": ">=4.8 < 6.0",
+        "heroku/heroku-buildpack-php": "^146.0"
     },
     "autoload": {
         "psr-4": {
