@@ -33,7 +33,7 @@
         }
     },
 	"scripts": {
-        "start": "php -S 0.0.0.0:8080 -t public public/index.php",
+        "start": "chmod +x bin/galgas && mkdir -p data && php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "phpunit"
 	}
 
