@@ -7,7 +7,8 @@
  */
 
 namespace GWA;
-require_once 'src/lib/ProjectManager.php';
+
+require_once '../src/lib/ProjectManager.php';
 
 use GWA\FileManagement\ProjectDbManager;
 use GWA\FileManagement\ProjectFsManager;

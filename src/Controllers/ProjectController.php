@@ -8,8 +8,7 @@
 
 namespace GWA;
 
-require_once 'src/lib/Project.php';
-
+use GWA\Project;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

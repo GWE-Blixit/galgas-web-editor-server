@@ -12,10 +12,10 @@ namespace GWA;
 use GWA\FileManagement\FileManagerInterface;
 use GWA\FileManagement\ProjectFsManager;
 
-require_once 'src/lib/Project.php';
-require_once 'src/lib/FileManagement/ProjectFsManager.php';
-require_once 'src/lib/FileManagement/ProjectDbManager.php';
-require_once 'src/lib/FileSystem.php';
+require_once '../src/lib/Project.php';
+require_once '../src/lib/FileManagement/ProjectFsManager.php';
+require_once '../src/lib/FileManagement/ProjectDbManager.php';
+require_once '../src/lib/FileSystem.php';
 
 class ProjectManager
 {
@@ -36,6 +36,10 @@ class ProjectManager
     {
         $this->manager = (new \ReflectionClass($managerName))->newInstance();
         $this->controller = $controller;
+    }
+
+    public function getFileManager(): FileManagerInterface {
+        return $this->manager;
     }
 
     public function findAll(array $options = []){
@@ -64,23 +68,47 @@ class ProjectManager
         $files = $this->manager->scandir($directory);
 
         natcasesort($files);
-        $content = '';
-        $content .= "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
-            // All dirs
-            foreach( $files as $file ) {
-                if( file_exists($directory.'/'.$file) && is_dir($directory.'/'.$file) ) {
-                    $content .= "<li class=\"directory collapsed \"><a href=\"#\" rel=\"" . htmlentities($localdirectory.'/'.$file) . "/\">" . htmlentities($file) . "</a></li>";
-                }
+        //$content = '';
+        // $content .= "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
+            //     // All dirs
+            //     foreach( $files as $file ) {
+            //         if( file_exists($directory.'/'.$file) && is_dir($directory.'/'.$file) ) {
+            //             $content .= "<li class=\"directory collapsed \"><a href=\"#\" rel=\"" . htmlentities($localdirectory.'/'.$file) . "/\">" . htmlentities($file) . "</a></li>";
+            //         }
+            //     }
+            //     // All files
+            //     foreach( $files as $file ) {
+            //         if( file_exists($directory.'/'.$file) && !is_dir($directory.'/'.$file) ) {
+            //             $ext = preg_replace('/^.*\./', '', $file);
+            //             $content .= "<li class=\"file ext_$ext\"><a href=\"#\" rel=\"" . htmlentities($localdirectory.'/'.$file) . "\">" . htmlentities($file) . "</a></li>";
+            //         }
+            //     }
+            // $content .= "</ul>";
+        
+        $content = [];
+        // All dirs
+        foreach( $files as $file ) {
+            if( file_exists($directory.'/'.$file) && is_dir($directory.'/'.$file) ) {
+                $content[] = [
+                    'path' => htmlentities($localdirectory.'/'.$file),
+                    'name' => htmlentities($file),
+                    'dir'  => true,
+                ];
             }
-            // All files
-            foreach( $files as $file ) {
-                if( file_exists($directory.'/'.$file) && !is_dir($directory.'/'.$file) ) {
-                    $ext = preg_replace('/^.*\./', '', $file);
-                    $content .= "<li class=\"file ext_$ext\"><a href=\"#\" rel=\"" . htmlentities($localdirectory.'/'.$file) . "\">" . htmlentities($file) . "</a></li>";
-                }
+        }
+        // All files
+        foreach( $files as $file ) {
+            if( file_exists($directory.'/'.$file) && !is_dir($directory.'/'.$file) ) {
+                $ext = preg_replace('/^.*\./', '', $file);
+                $content[] = [
+                    'path' => htmlentities($localdirectory.'/'.$file),
+                    'name' => htmlentities($file),
+                    'dir'  => false,
+                ];
             }
-        $content .= "</ul>";
-        return $content;
+        }
+        
+        return json_encode($content);
     }
 
     public function findOne(array $options = ['id'=>null]){

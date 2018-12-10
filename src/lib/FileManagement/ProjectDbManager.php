@@ -8,9 +8,10 @@
 
 namespace GWA\FileManagement;
 
-require_once 'src/lib/FileManagement/FileManagerInterface.php';
-require_once 'src/lib/ProjectManager.php';
+// require_once '../src/lib/FileManagement/FileManagerInterface.php';
+// require_once '../src/lib/ProjectManager.php';
 
+use GWA\FileManagement\FileManagerInterface;
 use GWA\ProjectManager;
 
 class ProjectDbManager

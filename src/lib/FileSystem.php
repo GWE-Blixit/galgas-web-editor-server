@@ -36,13 +36,17 @@ class FileSystem
     }
 
     public function write($file, $data, callable $callback = null){
-        $bytes = file_put_contents($file,$data);
-        return ($this->call($callback,[$bytes])) ? '' : $bytes;
+        $bytes = file_put_contents($file, $data);
+        return ($this->call($callback, [$bytes])) ? '' : $bytes;
     }
 
     public function galgas($args, callable $callback = null){
         exec ( "galgas ".$args , $lines, $return_var );
-        $this->call($callback,[$lines, $return_var]);
+        $this->call($callback, [$lines, $return_var]);
+    }
 
+    public function galgasVersion(callable $callback = null){
+        exec ( "galgas --version | grep galgas" , $lines, $return_var );
+        $this->call($callback, [$lines, $return_var]);
     }
 }

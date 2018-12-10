@@ -8,8 +8,8 @@
 
 namespace GWA\FileManagement;
 
-require_once 'src/lib/FileManagement/FileManagerInterface.php';
-require_once 'src/lib/ProjectManager.php';
+require_once '../src/lib/FileManagement/FileManagerInterface.php';
+// require_once '../src/lib/ProjectManager.php';
 
 use GWA\ProjectManager;
 
@@ -20,8 +20,8 @@ class ProjectFsManager
 
     function write($resource, $content)
     {
-        if( ! is_file($resource)){
-            $handle = fopen($resource,"w+");
+        if(! is_file($resource)){
+            $handle = fopen($resource, "w+");
             fclose($handle);
         }
         return file_put_contents($resource, $content,LOCK_EX);
@@ -39,7 +39,9 @@ class ProjectFsManager
 
     function remove($resource)
     {
-        // TODO: Implement remove() method.
+        if(is_file($resource)){
+            unlink($resource);
+        }
     }
 
     function mv($from, $to)
@@ -50,6 +52,11 @@ class ProjectFsManager
     function is_dir($resource)
     {
         return is_dir($resource);
+    }
+
+    function is_file(string $resource)
+    {
+        return file_exists($resource);
     }
 
     function mkdir($resource, $recursive = true)
