@@ -41,12 +41,12 @@ class FileSystem
     }
 
     public function galgas($args, callable $callback = null){
-        exec ( "galgas ".$args , $lines, $return_var );
+        exec ( FileSystem::BIN_GALGAS . " ".$args , $lines, $return_var );
         $this->call($callback, [$lines, $return_var]);
     }
 
     public function galgasVersion(callable $callback = null){
-        exec ( "galgas --version | grep galgas" , $lines, $return_var );
+        exec ( FileSystem::BIN_GALGAS . " --version | grep galgas" , $lines, $return_var );
         $this->call($callback, [$lines, $return_var]);
     }
 }
